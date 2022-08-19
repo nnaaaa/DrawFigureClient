@@ -16,10 +16,17 @@ export const registerValidate = yup.object().shape({
     .oneOf([yup.ref("password"), null], "Passwords must match"),
 })
 
-
 export const figureValidate = yup.object().shape({
-  symbol: yup.string().required("Symbol is required").length(1, "Symbol must be 1 character"),
-  measurement: yup.number().required("Measurement is required").integer("Measurement must be an integer"),
-  color: yup.string().required("Color is required").matches(/#(?:[0-9a-fA-F]{3,4}){1,2}/g, "Invalid color"),
+  symbol: yup
+    .string()
+    .required("Symbol is required")
+    .length(1, "Symbol must be 1 character"),
+  measurement: yup
+    .number()
+    .required("Measurement is required")
+    .integer("Measurement must be an integer"),
+  color: yup
+    .string()
+    .required("Color is required")
+    .matches(/#(?:[0-9a-fA-F]{3,4}){1,2}/g, "Invalid color"),
 })
-

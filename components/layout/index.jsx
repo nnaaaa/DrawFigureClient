@@ -38,9 +38,14 @@ export function Layout({
   )
 }
 
-export function Wrapper({ width = "auto", height = "auto", children }) {
+export function Wrapper({
+  width = "auto",
+  height = "auto",
+  children,
+  minHeight = "auto",
+}) {
   return (
-    <div style={{ width, height }} className={styles.wrapper}>
+    <div style={{ width, minHeight, height }} className={styles.wrapper}>
       {children}
     </div>
   )

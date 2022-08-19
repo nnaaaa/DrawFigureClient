@@ -11,8 +11,11 @@ import {
   Title,
   Wrapper,
 } from "../../components"
+import { login } from "../../apis"
+import { useRouter } from "next/router"
 
 export default function Login() {
+  const router = useRouter()
   const { errors, values, touched, handleSubmit, handleChange } = useFormik({
     initialValues: {
       email: "",
@@ -21,12 +24,14 @@ export default function Login() {
     validationSchema: loginValidate,
     onSubmit: async (values, { setFieldError }) => {
       try {
+        const message = await login(values)
+
+        if ((message = "Success")) router.push("/list")
         // await dispatch(authActions.loginAsync(values))
         // unwrapResult(await dispatch(authActions.getProfile()))
         // navigate('/bot/manage', { replace: true })
-        console.log(values)
-      } catch {
-        console.log("error")
+      } catch (e) {
+        console.log(e)
         setFieldError("email", "Email doesn't exist")
       }
     },

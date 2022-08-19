@@ -26,15 +26,12 @@ export default function Register() {
         // await dispatch(authActions.loginAsync(values))
         // unwrapResult(await dispatch(authActions.getProfile()))
         // navigate('/bot/manage', { replace: true })
-        console.log(values)
-      } catch {
-        console.log("error")
+      } catch (e) {
+        console.error(e)
         setFieldError("email", "Email doesn't exist")
       }
     },
   })
-
-  console.log(errors)
 
   return (
     <form onSubmit={handleSubmit}>

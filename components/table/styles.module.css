@@ -1,4 +1,4 @@
-.table{
+.table {
   width: 100%;
 
   border-collapse: collapse;
@@ -7,11 +7,11 @@
   border-style: hidden;
   box-shadow: 0 0 0 1px #e2e2e2;
 }
-.tr{
+.tr {
   transition: all 0.1s ease-in-out;
 }
 
-.tr:hover{
+.tr:hover {
   cursor: pointer;
   opacity: 0.6;
 }

@@ -6,6 +6,14 @@ const nextConfig = {
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
+  async rewrites() {
+    return [
+      {
+        source: "/",
+        destination: "http://localhost:5000",
+      },
+    ]
+  },
 }
 
 module.exports = nextConfig

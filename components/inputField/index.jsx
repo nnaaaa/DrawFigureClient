@@ -62,7 +62,12 @@ export function PasswordField({ placeholder, label, value, onChange, name }) {
   )
 }
 
-export function SelectField({ label, options, placeholder,onChange:setValue }) {
+export function SelectField({
+  label,
+  options,
+  placeholder,
+  onChange: setValue,
+}) {
   const onChange = (e) => {
     setValue(e.target.value)
   }
@@ -81,7 +86,11 @@ export function SelectField({ label, options, placeholder,onChange:setValue }) {
           )}
 
           {options.map((option) => (
-            <option key={option.value} value={option.value} className={styles.option}>
+            <option
+              key={option.value}
+              value={option.value}
+              className={styles.option}
+            >
               {option.label}
             </option>
           ))}

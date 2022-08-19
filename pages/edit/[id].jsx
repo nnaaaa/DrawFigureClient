@@ -2,6 +2,7 @@ import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons"
 import { useFormik } from "formik"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import { editFigure } from "../../apis/figure"
 import {
   ContainedButton,
   InputField,
@@ -16,25 +17,26 @@ import { options } from "../input"
 
 function Edit() {
   const router = useRouter()
-
-  console.log(router.query)
-
-  const { errors, values, touched, handleSubmit, handleChange,setFieldValue } = useFormik({
-    initialValues: router.query,
-    enableReinitialize: true,
-    validationSchema: figureValidate,
-    onSubmit: async (values, { setFieldError }) => {
-      try {
-        // await dispatch(authActions.loginAsync(values))
-        // unwrapResult(await dispatch(authActions.getProfile()))
-        // navigate('/bot/manage', { replace: true })
-        console.log(values)
-      } catch {
-        console.log("error")
-        setFieldError("email", "Email doesn't exist")
-      }
-    },
-  })
+  const { errors, values, touched, handleSubmit, handleChange, setFieldValue } =
+    useFormik({
+      initialValues: router.query,
+      enableReinitialize: true,
+      validationSchema: figureValidate,
+      onSubmit: async (values, { setFieldError }) => {
+        try {
+          const message = await editFigure(values)
+          if (message === "Success") {
+            router.push({ pathname: `/draw/${values.id}`, query: values })
+          }
+          // await dispatch(authActions.loginAsync(values))
+          // unwrapResult(await dispatch(authActions.getProfile()))
+          // navigate('/bot/manage', { replace: true })
+        } catch (e) {
+          console.error(e)
+          setFieldError("email", "Email doesn't exist")
+        }
+      },
+    })
 
   return (
     <Wrapper width="770px" height="90vh">
@@ -63,16 +65,29 @@ function Edit() {
           style={{ flexDirection: "column", alignItems: "flex-end" }}
         >
           <Layout fullWidth>
-            <InputField value={values.symbol} onChange={handleChange} name="symbol" label="Symbol" placeholder="Ex: &" />
+            <InputField
+              value={values.symbol}
+              onChange={handleChange}
+              name="symbol"
+              label="Symbol"
+              placeholder="Ex: &"
+            />
           </Layout>
 
           <Layout fullWidth mt="24px">
-            <InputField value={values.color} onChange={handleChange} name="color" label="Color" placeholder="Ex: #111111" />
+            <InputField
+              value={values.color}
+              onChange={handleChange}
+              name="color"
+              label="Color"
+              placeholder="Ex: #111111"
+            />
           </Layout>
 
           <Layout mt="24px">
             <ContainedButton
               style={{ paddingLeft: "50px", paddingRight: "50px" }}
+              onClick={() => router.back()}
               text="Cancel"
             />
           </Layout>
@@ -85,7 +100,11 @@ function Edit() {
           style={{ flexDirection: "column", alignItems: "flex-start" }}
         >
           <Layout fullWidth>
-            <SelectField onChange={(value)=>setFieldValue('shape',value)} label="Shape" options={options} />
+            <SelectField
+              onChange={(value) => setFieldValue("shape", value)}
+              label="Shape"
+              options={options}
+            />
           </Layout>
 
           <Layout fullWidth mt="24px">
@@ -102,6 +121,7 @@ function Edit() {
             <ContainedButton
               style={{ paddingLeft: "50px", paddingRight: "50px" }}
               text="Save"
+              onClick={handleSubmit}
             />
           </Layout>
         </Layout>

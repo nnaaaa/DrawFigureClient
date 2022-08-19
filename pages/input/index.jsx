@@ -1,6 +1,8 @@
 import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons"
 import { useFormik } from "formik"
 import Link from "next/link"
+import { useRouter } from "next/router"
+import { createFigure } from "../../apis/figure"
 import {
   ContainedButton,
   InputField,
@@ -19,28 +21,32 @@ export const options = [
 ]
 
 function Input() {
-  const { errors, values, touched, handleSubmit, handleChange,setFieldValue } = useFormik({
+  const router = useRouter()
+  const {
+    errors,
+    values,
+    touched,
+    handleSubmit,
+    handleChange,
+    setFieldValue,
+    resetForm,
+  } = useFormik({
     initialValues: {
       symbol: "",
       shape: "",
       measurement: "",
-      color:""
+      color: "",
     },
     validationSchema: figureValidate,
     onSubmit: async (values, { setFieldError }) => {
       try {
-        // await dispatch(authActions.loginAsync(values))
-        // unwrapResult(await dispatch(authActions.getProfile()))
-        // navigate('/bot/manage', { replace: true })
-        console.log(values)
-      } catch {
-        console.log("error")
-        setFieldError("email", "Email doesn't exist")
+        const figure = await createFigure(values)
+        router.push({ pathname: `/draw/${figure.id}`, query: figure })
+      } catch (e) {
+        console.error(e)
       }
     },
   })
-
-  console.log(errors)
 
   return (
     <Wrapper width="770px" height="90vh">
@@ -68,12 +74,18 @@ function Input() {
         style={{ justifyContent: "space-between" }}
       >
         <Layout width="48%">
-          <InputField value={values.symbol} onChange={handleChange} name="symbol" label="Symbol" placeholder="Ex: &" />
+          <InputField
+            value={values.symbol}
+            onChange={handleChange}
+            name="symbol"
+            label="Symbol"
+            placeholder="Ex: &"
+          />
         </Layout>
 
         <Layout width="48%">
           <SelectField
-            onChange={(value)=>setFieldValue('shape',value)}
+            onChange={(value) => setFieldValue("shape", value)}
             label="Shape"
             options={options}
             placeholder="Chose shape"
@@ -88,7 +100,13 @@ function Input() {
         style={{ justifyContent: "space-between" }}
       >
         <Layout width="48%">
-          <InputField value={values.color} onChange={handleChange} name="color" label="Color" placeholder="Ex: #111111" />
+          <InputField
+            value={values.color}
+            onChange={handleChange}
+            name="color"
+            label="Color"
+            placeholder="Ex: #111111"
+          />
         </Layout>
 
         <Layout width="48%">
