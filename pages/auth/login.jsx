@@ -11,11 +11,15 @@ import {
   Title,
   Wrapper,
 } from "../../components"
-import { login } from "../../apis"
+import { getProfile, login } from "../../apis"
 import { useRouter } from "next/router"
+import useSWR from "swr"
+import { useEffect } from "react"
 
 export default function Login() {
   const router = useRouter()
+  const { data: user, mutate } = useSWR("/auth/me", getProfile)
+
   const { errors, values, touched, handleSubmit, handleChange } = useFormik({
     initialValues: {
       email: "",
@@ -25,17 +29,17 @@ export default function Login() {
     onSubmit: async (values, { setFieldError }) => {
       try {
         const message = await login(values)
-
-        if ((message = "Success")) router.push("/list")
-        // await dispatch(authActions.loginAsync(values))
-        // unwrapResult(await dispatch(authActions.getProfile()))
-        // navigate('/bot/manage', { replace: true })
+        mutate()
       } catch (e) {
         console.log(e)
         setFieldError("email", "Email doesn't exist")
       }
     },
   })
+
+  useEffect(() => {
+    if (user) router.push("/")
+  }, [user, router])
 
   return (
     <form onSubmit={handleSubmit}>
@@ -76,7 +80,7 @@ export default function Login() {
 
         <Layout mt="24px">
           <div className={styles.helper}>
-            <span>You don't have an account?&nbsp;</span>
+            <span>You do not have an account? </span>
             <Link href="/auth/register">Sign up</Link>
           </div>
         </Layout>

@@ -67,6 +67,7 @@ export function SelectField({
   options,
   placeholder,
   onChange: setValue,
+  value,
 }) {
   const onChange = (e) => {
     setValue(e.target.value)
@@ -78,7 +79,11 @@ export function SelectField({
         {label}
       </label>
       <div className={styles.select}>
-        <select id="standard-select" defaultValue="chose" onChange={onChange}>
+        <select
+          id="standard-select"
+          defaultValue={value ? value : "chose"}
+          onChange={onChange}
+        >
           {placeholder && (
             <option value="chose" disabled hidden className={styles.option}>
               {placeholder}
@@ -90,6 +95,7 @@ export function SelectField({
               key={option.value}
               value={option.value}
               className={styles.option}
+              selected={value === option.value}
             >
               {option.label}
             </option>

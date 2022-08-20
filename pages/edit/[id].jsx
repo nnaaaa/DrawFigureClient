@@ -50,7 +50,7 @@ function Edit() {
             alignItems: "center",
           }}
         >
-          <Link href="/list">
+          <Link href="/">
             <TextButton text="Back to list" startIcon={faArrowLeftLong} />
           </Link>
         </Layout>
@@ -101,6 +101,7 @@ function Edit() {
         >
           <Layout fullWidth>
             <SelectField
+              value={values.shape}
               onChange={(value) => setFieldValue("shape", value)}
               label="Shape"
               options={options}

@@ -24,7 +24,7 @@ function Draw() {
             transform: "translateY(-50%)",
           }}
         >
-          <Link href="/list">
+          <Link href="/">
             <TextButton text="Back to list" startIcon={faArrowLeftLong} />
           </Link>
         </Layout>

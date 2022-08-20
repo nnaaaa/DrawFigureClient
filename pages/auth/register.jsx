@@ -10,8 +10,15 @@ import {
 import styles from "./styles.module.css"
 import { useFormik } from "formik"
 import { registerValidate } from "../../utils/validation"
+import { getProfile, register } from "../../apis"
+import { useRouter } from "next/router"
+import { useEffect } from "react"
+import useSWR from "swr"
 
 export default function Register() {
+  const router = useRouter()
+  const { data: user } = useSWR("/auth/me", getProfile)
+
   const { errors, values, touched, handleSubmit, handleChange } = useFormik({
     initialValues: {
       firstName: "",
@@ -23,15 +30,23 @@ export default function Register() {
     validationSchema: registerValidate,
     onSubmit: async (values, { setFieldError }) => {
       try {
-        // await dispatch(authActions.loginAsync(values))
-        // unwrapResult(await dispatch(authActions.getProfile()))
-        // navigate('/bot/manage', { replace: true })
+        const userDto = {
+          name: values.firstName.trim() + " " + values.lastName.trim(),
+          email: values.email.trim(),
+          password: values.password.trim(),
+        }
+        const message = await register(userDto)
+        mutate()
       } catch (e) {
         console.error(e)
         setFieldError("email", "Email doesn't exist")
       }
     },
   })
+
+  useEffect(() => {
+    if (user) router.push("/")
+  }, [user, router])
 
   return (
     <form onSubmit={handleSubmit}>
@@ -80,7 +95,7 @@ export default function Register() {
         </Layout>
 
         <Layout fullWidth mt="24px">
-          <PasswordForm
+          <PasswordField
             name="confirmPassword"
             value={values.confirmPassword}
             onChange={handleChange}

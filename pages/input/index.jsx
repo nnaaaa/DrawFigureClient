@@ -60,7 +60,7 @@ function Input() {
             alignItems: "center",
           }}
         >
-          <Link href="/list">
+          <Link href="/">
             <TextButton text="Back to list" startIcon={faArrowLeftLong} />
           </Link>
         </Layout>

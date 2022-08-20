@@ -6,13 +6,8 @@ const nextConfig = {
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
-  async rewrites() {
-    return [
-      {
-        source: "/",
-        destination: "http://localhost:5000",
-      },
-    ]
+  env: {
+    SERVER_URL: process.env.SERVER_URL,
   },
 }
 
