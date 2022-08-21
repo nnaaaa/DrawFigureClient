@@ -4,7 +4,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons"
 import styles from "./styles.module.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-export function InputField({ placeholder, label, value, onChange, name }) {
+export function InputField({ placeholder, label, value, onChange, name,error }) {
   return (
     <div className={styles.wrapper}>
       <label className={styles.label} htmlFor={name}>
@@ -18,11 +18,12 @@ export function InputField({ placeholder, label, value, onChange, name }) {
         value={value}
         onChange={onChange}
       />
+      {error && <div className={styles.error}>{error}</div>}
     </div>
   )
 }
 
-export function PasswordField({ placeholder, label, value, onChange, name }) {
+export function PasswordField({ placeholder, label, value, onChange, name,error }) {
   const [isHidden, setHidden] = useState(true)
 
   return (
@@ -58,6 +59,7 @@ export function PasswordField({ placeholder, label, value, onChange, name }) {
           />
         )}
       </div>
+      {error && <div className={styles.error}>{error}</div>}
     </div>
   )
 }
@@ -68,6 +70,7 @@ export function SelectField({
   placeholder,
   onChange: setValue,
   value,
+  error
 }) {
   const onChange = (e) => {
     setValue(e.target.value)
@@ -102,6 +105,7 @@ export function SelectField({
           ))}
         </select>
       </div>
+      {error && <div className={styles.error}>{error}</div>}
     </div>
   )
 }

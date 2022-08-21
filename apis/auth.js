@@ -1,8 +1,9 @@
 import { AxiosClient } from "./axios"
 import Cookie from "js-cookie"
+import { AuthRoute } from "../utils/route"
 
 export const login = async (userDto) => {
-  const res = await AxiosClient.post("/auth/login", userDto)
+  const res = await AxiosClient.post(AuthRoute.login, userDto)
   if (res.headers) {
     if (res.headers.accesstoken) {
       Cookie.set("accesstoken", res.headers.accesstoken)
@@ -15,7 +16,7 @@ export const login = async (userDto) => {
 }
 
 export const register = async (userDto) => {
-  const res = await AxiosClient.post("/auth/register", userDto)
+  const res = await AxiosClient.post(AuthRoute.register, userDto)
   if (res.headers) {
     if (res.headers.accesstoken) {
       Cookie.set("accesstoken", res.headers.accesstoken)
@@ -28,6 +29,6 @@ export const register = async (userDto) => {
 }
 
 export const getProfile = async () => {
-  const res = await AxiosClient.get("/auth/me")
+  const res = await AxiosClient.get(AuthRoute.getProfile)
   return res.data
 }

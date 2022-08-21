@@ -18,6 +18,14 @@
   margin-bottom: 10px;
 }
 
+.error{
+  color: red;
+  font-family: "Quicksand";
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
 .input,
 .input::placeholder,
 .inputPassword,

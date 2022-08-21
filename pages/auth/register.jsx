@@ -56,6 +56,7 @@ export default function Register() {
         <Layout fullWidth flex style={{ justifyContent: "space-between" }}>
           <Layout width="48%">
             <InputField
+              error={touched.firstName && errors.firstName}
               name="firstName"
               value={values.firstName}
               onChange={handleChange}
@@ -66,6 +67,7 @@ export default function Register() {
           <Layout width="48%">
             <InputField
               name="lastName"
+              error={touched.lastName && errors.lastName}
               value={values.lastName}
               onChange={handleChange}
               placeholder="Enter your last name"
@@ -77,6 +79,7 @@ export default function Register() {
         <Layout fullWidth mt="24px">
           <InputField
             name="email"
+            error={touched.email && errors.email}
             value={values.email}
             onChange={handleChange}
             placeholder="Enter your email"
@@ -87,6 +90,7 @@ export default function Register() {
         <Layout fullWidth mt="24px">
           <PasswordField
             name="password"
+            error={touched.password && errors.password}
             value={values.password}
             onChange={handleChange}
             placeholder="....."
@@ -97,6 +101,7 @@ export default function Register() {
         <Layout fullWidth mt="24px">
           <PasswordField
             name="confirmPassword"
+            error={touched.confirmPassword && errors.confirmPassword}
             value={values.confirmPassword}
             onChange={handleChange}
             placeholder="....."

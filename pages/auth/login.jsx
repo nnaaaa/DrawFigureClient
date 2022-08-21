@@ -49,6 +49,7 @@ export default function Login() {
         <Layout mt="48px" fullWidth>
           <InputField
             name="email"
+            erorr={touched.email && errors.email}
             placeholder="Enter your email"
             label="Email"
             value={values.email}
@@ -58,6 +59,7 @@ export default function Login() {
 
         <Layout mt="24px" fullWidth>
           <PasswordField
+            erorr={touched.password && errors.password}
             name="password"
             placeholder="....."
             label="Password"
